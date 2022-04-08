@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="140px" height="56px" viewBox="0 0 140 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>logo</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="PingFangSC-Regular, PingFang SC" font-size="45" font-weight="normal" letter-spacing="1">
+        <g id="登入页面" transform="translate(-650.000000, -255.000000)" fill="#FFFFFF">
+            <g id="整体" transform="translate(-135.000000, -31.000000)">
+                <g id="logo" transform="translate(785.000000, 286.000000)">
+                    <text id="ERP">
+                        <tspan x="0" y="48">ERP</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

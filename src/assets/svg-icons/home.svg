@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>23系统管理</title>
+    <g id="AntDesign-Pro-4.0" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="新增合同" transform="translate(-35.000000, -149.000000)" fill-rule="nonzero">
+            <g id="侧面栏" transform="translate(0.000000, -1.000000)">
+                <g id="编组-6备份-9">
+                    <g id="编组-5">
+                        <g id="Group-3">
+                            <g id="23系统管理" transform="translate(35.000000, 150.000000)">
+                                <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="16" height="16"></rect>
+                                <path d="M4.5,3 C5.3265625,3 6,3.6734375 6,4.5 C6,5.3265625 5.3265625,6 4.5,6 C3.6734375,6 3,5.3265625 3,4.5 C3,3.6734375 3.6734375,3 4.5,3 M4.5,2 C3.11875,2 2,3.11875 2,4.5 C2,5.88125 3.11875,7 4.5,7 C5.88125,7 7,5.88125 7,4.5 C7,3.11875 5.88125,2 4.5,2 Z M13,3 L13,6 L10,6 L10,3 L13,3 M14,2 L9,2 L9,7 L14,7 L14,2 Z M6,10 L6,13 L3,13 L3,10 L6,10 M7,9 L2,9 L2,14 L7,14 L7,9 Z M13,10 L13,13 L10,13 L10,10 L13,10 M14,9 L9,9 L9,14 L14,14 L14,9 Z" id="形状" fill="#7382AE"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

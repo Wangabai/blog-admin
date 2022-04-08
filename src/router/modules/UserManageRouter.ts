@@ -1,0 +1,27 @@
+/*
+ * @Author: 王鑫
+ * @Description: 用户路由
+ * @Date: 2022-04-07 16:58:13
+ */
+import layout from '@/layout/index.vue'
+
+export default {
+  path: '/user',
+  component: layout,
+  redirect: '/user/message',
+  name: 'userManage',
+  meta: {
+    title: '用户管理',
+    icon: 'el-icon-user'
+  },
+  children: [
+    {
+      path: '/message',
+      name: 'userMessage',
+      component: () => import('@/views/user-message/index.vue'),
+      meta: {
+        title: '个人信息',
+      }
+    }
+  ]
+}
