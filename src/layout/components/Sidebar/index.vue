@@ -36,7 +36,7 @@ const logoHeight = 50
   justify-content: center;
   .logo-title {
     margin-left: 10px;
-    color: rgb(7, 0, 0);
+    color: #fff;
     font-weight: 600;
     line-height: 50px;
     font-size: 16px;

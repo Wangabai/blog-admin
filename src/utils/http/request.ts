@@ -16,6 +16,7 @@ import { genConfig, jsonReg, errMsgMap, timeoutReg, netErrReg } from './config'
 import router from '@/router'
 import { removeItem } from '@/utils/storage'
 import { ElMessage } from 'element-plus'
+import store from '@/store'
 
 class EnclosureHttp {
   constructor() {
@@ -63,19 +64,20 @@ class EnclosureHttp {
   private httpInterceptorsRequest(): void {
     EnclosureHttp.axiosInstance.interceptors.request.use(
       (config: EnclosureHttpRequestConfig) => {
-        const $config = config
-        this.cancelRepeatRequest();
+        this.cancelRepeatRequest()
         // 优先判断post/get等方法是否传入回掉，否则执行初始化设置等回掉
         if (typeof this.beforeRequestCallback === 'function') {
-          this.beforeRequestCallback($config)
+          this.beforeRequestCallback(config)
           this.beforeRequestCallback = undefined
-          return $config
+          return config
         }
         if (EnclosureHttp.initConfig.beforeRequestCallback) {
-          EnclosureHttp.initConfig.beforeRequestCallback($config)
-          return $config
+          EnclosureHttp.initConfig.beforeRequestCallback(config)
+          return config
         }
-        return $config
+        const token = store.getters.token
+        if (token) config.headers['Authorization'] = `Bearer ${token}`
+        return config
       },
       (error) => {
         return Promise.reject(error)

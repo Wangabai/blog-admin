@@ -8,8 +8,9 @@
 </template>
 
 <script setup lang="ts">
+import { useStore } from 'vuex'
 import { } from 'vue';
-
+const store = useStore()
 </script>
 <style lang="scss" scoped>
 </style>

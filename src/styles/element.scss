@@ -1,3 +1,10 @@
 .el-avatar {
   --el-avatar-background-color: none !important;
 }
+
+// pagination
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .el-pager li {
+    background-color: #fff;
+}

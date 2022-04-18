@@ -10,6 +10,8 @@
     "json-server": "json-server __json_server_mock__/db.json --watch --port 8001 --middlewares ./__json_server_mock__/middleware.js"
   },
   "dependencies": {
+    "@wangeditor/editor": "^5.0.0",
+    "@wangeditor/editor-for-vue": "^5.1.10",
     "axios": "^0.26.1",
     "element-plus": "^1.1.0-beta.15",
     "path-browserify": "^1.0.1",
@@ -21,6 +23,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@toast-ui/editor": "^3.0.2",
     "@types/node": "^17.0.23",
     "@types/path-browserify": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^5.17.0",

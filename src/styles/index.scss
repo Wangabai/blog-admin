@@ -55,3 +55,74 @@ div:focus {
     height: 0;
   }
 }
+
+// 页面样式
+.page-container{
+
+}
+
+// 筛选样式
+.search-box {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0 0 0 10px;
+  & > * {
+    margin-right: 16px;
+    margin-bottom: 10px;
+  }
+  & > *:last-child {
+    margin-left: 16px;
+    margin-right: 0px;
+  }
+  > .clear-btn {
+    width: 72px;
+    margin: 0;
+  }
+  > .search-item {
+    display: flex;
+    align-items: center;
+  }
+  > .search-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+  &.is-expand {
+    margin-bottom: 10px;
+  }
+  .expand-btn {
+    font-size: 14px;
+    cursor: pointer;
+    color: #4880ff;
+  }
+  .expand-icon {
+    margin-left: 4px;
+    transition: transform .3s;
+    &.is-expand {
+      transform: rotate(180deg);
+    }
+  }
+}
+.search-item > .search-item__title {
+  font-size: 14px;
+  flex-shrink: 0;
+  width: fit-content;
+  margin: 0 8px 0 0;
+}
+
+// 操作文字
+.opration_row {
+  span {
+    padding: 0 8px;
+    color: #4880ff;
+    cursor: Pointer;
+  }
+  span:first-child {
+    padding-left: 0;
+  }
+  span:not(:last-child) {
+    border-right: 1px solid #e5e5e5;
+  }
+}

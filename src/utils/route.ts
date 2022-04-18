@@ -3,7 +3,7 @@
  * @Description: 路由处理
  * @Date: 2022-03-28 17:03:15
  */
-import path from 'path'
+import path from 'path-browserify'
 import { isNull } from './filters'
 // 所有的子路由
 const getChildrenRoutes = (routes: any[]) => {
@@ -35,6 +35,7 @@ export const generateMenus = (routes: any[], basePath = '') => {
   // 不满足该条件 `meta && meta.title && meta.icon` 的数据不应该存在
   routes.forEach((item) => {
     // 不存在children && 不存在meta 直接return
+    if (item.hidden) return
     if (isNull(item.children) && isNull(item.meta)) return
     // 存在children 不存在meta 迭代generateMenus
     if (!isNull(item.children) && isNull(item.meta)) {
@@ -42,17 +43,18 @@ export const generateMenus = (routes: any[], basePath = '') => {
       return
     }
     // 不存在children，存在meta || 存在children && 存在meta
-    const routePath = path.resolve(basePath, item.path)// basePath + item.path //path.resolve(basePath, item.path)
+    const routePath = path.resolve(basePath, item.path) // basePath + item.path //path.resolve(basePath, item.path)
     // 路由分离之后，可能存在同名父路由的情况
-    let route = result.find((item) => item.path === routePath)
+    let route = result.find((item) => {
+      item.path === routePath
+    })
     if (!route) {
       route = {
         ...item,
         path: routePath,
         children: []
       }
-      // icon && title
-      if (route.meta.icon && route.meta.title) {
+      if (route.meta.title) {
         result.push(route)
       }
     }

@@ -9,31 +9,33 @@ export default {
   path: '/article',
   component: layout,
   redirect: '/article/list',
-  name: 'articleManage',
+  name: 'ArticleManage',
   meta: {
     title: '博客管理',
-    icon: 'el-icon-article'
+    icon: 'article'
   },
   children: [
     {
-      path: '/list',
-      name: 'articleList',
+      path: '/article/list',
+      name: 'ArticleList',
       component: () => import('@/views/article-manage/article-list/index.vue'),
       meta: {
         title: '博客列表'
       }
     },
     {
-      path: '/add',
-      name: 'articleAdd',
+      path: '/article/:type',
+      name: 'ArticleAdd',
+      hidden: true,
       component: () => import('@/views/article-manage/article-add/index.vue'),
       meta: {
-        title: '新增博客'
+        title: '新增编辑博客'
       }
     },
     {
-      path: '/detail',
-      name: 'articleDetail',
+      path: '/article/detail',
+      name: 'ArticleDetail',
+      hidden: true,
       component: () => import('@/views/article-manage/article-detail/index.vue'),
       meta: {
         title: '博客详情'

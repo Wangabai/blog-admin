@@ -11,7 +11,7 @@
       </div>
       <el-form-item prop="username">
         <span class="svg-container"
-          ><span class="svg-container"> <svg-icon icon="user"></svg-icon> </span
+          ><span class="svg-container"> <i class="el-icon-user"></i> </span
         ></span>
         <el-input
           placeholder="username"
@@ -23,7 +23,7 @@
       <el-form-item prop="password">
         <span class="svg-container"
           ><span class="svg-container">
-            <svg-icon icon="password"></svg-icon>
+            <svg-icon icon-class="password"></svg-icon>
           </span>
         </span>
         <el-input
@@ -34,7 +34,7 @@
         ></el-input>
         <span class="show-pwd"
           ><span class="svg-container" @click="onChangePwdType">
-            <svg-icon :icon="passwordType === 'password' ? 'eye' : 'eye-open'"></svg-icon> </span
+            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"></svg-icon> </span
         ></span>
       </el-form-item>
 
@@ -42,21 +42,25 @@
         type="primary"
         style="width: 100%; margin-bottom: 30px"
         :loading="loading"
-        @click="handlerLogin"
+        @click="handlerLogin(loginFromRef)"
         >登陆</el-button
       >
     </el-form>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+
+import type { ElForm } from 'element-plus'
+type FormInstance = InstanceType<typeof ElForm>
+
 const loginForm = ref({
-  username: 'super-admin',
+  username: 'test',
   password: '123456'
-});
+})
 
 const loginRules = ref({
   username: [
@@ -70,42 +74,43 @@ const loginRules = ref({
     {
       required: true,
       trigger: 'blur',
-      validator: (rule, value, cb) => {
+      validator: (rule: any, value: any, cb: any) => {
         if (value.length < 6) {
-          cb(new Error('密码不能少于6位'));
+          cb(new Error('密码不能少于6位'))
         }
-        cb();
+        cb()
       }
     }
   ]
-});
-const passwordType = ref('password');
+})
+const passwordType = ref('password')
 const onChangePwdType = () => {
-  if (passwordType.value === 'password') passwordType.value = 'text';
-  else passwordType.value = 'password';
-};
+  if (passwordType.value === 'password') passwordType.value = 'text'
+  else passwordType.value = 'password'
+}
 
-const loading = ref(false);
-const store = useStore();
-const loginFromRef = ref(null);
-const router = useRouter();
-const handlerLogin = () => {
-  loginFromRef.value.validate((valid, val) => {
+const loading = ref(false)
+const store = useStore()
+const loginFromRef = ref<FormInstance>()
+const router = useRouter()
+const handlerLogin = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.validate((valid: any, val: any) => {
     if (valid) {
-      loading.value = true;
+      loading.value = true
       store
         .dispatch('user/login', loginForm.value)
         .then(() => {
+          const token = store.getters.token
           // 登录后操作
-          router.push('/');
+          router.push('/')
         })
         .catch((err) => {
-          console.log(err);
-        });
-      loading.value = false;
+        })
+      loading.value = false
     }
-  });
-};
+  })
+}
 </script>
 <style lang="scss" scoped>
 $bg: #2d3a4b;

@@ -4,15 +4,22 @@
  * @Date: 2022-03-25 16:39:48
 -->
 <template>
-  <section class="app-main">
-    <router-view v-slot="{ Component, route }">
-      <transition name="fade-transform" mode="out-in">
-        <keep-alive>
-          <component :is="Component" :key="route.path" />
-        </keep-alive>
-      </transition>
-    </router-view>
-  </section>
+  <div>
+    <section class="app-main">
+      <el-card>
+        <router-view v-slot="{ Component, route }">
+          <transition name="fade-transform" mode="out-in">
+            <!-- <keep-alive> -->
+            <div :key="route.path">
+              <component :is="Component"></component>
+            </div>
+            <!-- <component :is="Component" :key="route.path" /> -->
+            <!-- </keep-alive> -->
+          </transition>
+        </router-view>
+      </el-card>
+    </section>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -59,11 +66,10 @@ const route = useRoute()
 <style lang="scss" scoped>
 .app-main {
   // 浏览器可是区域的高度
-  min-height: calc(100vh - 50px);
-  width: 100%;
+  // min-height: calc(100vh - 70px);
   position: relative;
-  padding: 82px 20px 20px 20px;
-  overflow-x: hidden;
-  background-color: #f7f8fb;
+  padding: 20px 20px 20px 20px;
+  // overflow-x: hidden;
+  background-color: #fff;
 }
 </style>

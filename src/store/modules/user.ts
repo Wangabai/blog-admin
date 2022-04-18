@@ -3,7 +3,7 @@
  * @Description: VUEX user
  * @Date: 2022-04-01 13:56:11
  */
-import { login } from '@/api/user'
+import { login, getUserInfo } from '@/api/user'
 import { setItem, getItem, removeAllItem } from '@/utils/storage'
 import { TOKEN } from '@/constant'
 import router from '@/router'
@@ -24,10 +24,10 @@ export default {
     setToken(state: UserStateTypes, token: string) {
       state.token = token
       setItem(TOKEN, token)
+    },
+    setUserInfo(state: any, userInfo: any) {
+      state.userInfo = userInfo
     }
-    // setUserInfo (state: any , userInfo) {
-    //   state.userInfo = userInfo
-    // }
   },
   actions: {
     // 登陆请求
@@ -35,7 +35,7 @@ export default {
       return new Promise<void>((resolve, reject) => {
         login(userInfo)
           .then((data) => {
-            context.commit('user/setToken', data.token)
+            context.commit('setToken', data.data.token)
             router.push('/')
             setTimeStamp()
             resolve()
@@ -44,16 +44,16 @@ export default {
       })
     },
     // 获取用户信息
-    // async getUserInfo (context) {
-    //   const res = await getUserInfo()
-    //   this.commit('user/setUserInfo', res)
-    //   return res
-    // },
+    async getUserInfo(context: any) {
+      const { data } = await getUserInfo()
+      context.commit('setUserInfo', data)
+      return data
+    },
     // 退出登陆
-    logout (context:any) {
+    logout(context: any) {
       // resetRouter()
-      context.commit('user/setToken', '')
-      context.commit('user/setToken', {})
+      context.commit('setToken', '')
+      context.commit('setUserInfo', {})
       removeAllItem()
       // TODO :清理掉权限相关配置
     }

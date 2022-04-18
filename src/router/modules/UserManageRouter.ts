@@ -9,15 +9,15 @@ export default {
   path: '/user',
   component: layout,
   redirect: '/user/message',
-  name: 'userManage',
+  name: 'UserManage',
   meta: {
     title: '用户管理',
     icon: 'el-icon-user'
   },
   children: [
     {
-      path: '/message',
-      name: 'userMessage',
+      path: '/user/message',
+      name: 'UserMessage',
       component: () => import('@/views/user-message/index.vue'),
       meta: {
         title: '个人信息',

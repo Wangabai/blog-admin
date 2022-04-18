@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2015",
     "useDefineForClassFields": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -10,7 +10,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "lib": ["esnext", "dom"],
+    "lib": ["es2017", "dom"],
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
@@ -18,18 +18,12 @@
     },
     "suppressImplicitAnyIndexErrors": true, // 允许索引
     // "noUnusedParameters": false // 不能有声明后未被使用的变量或参数
+
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "tests/**/*.ts",
-    "src/utils/path.js",
-    "types/**/*.d.ts",
-    "types/**/*.ts",
-    "types/global.d.ts",
-    "types/shims-tsx.d.ts",
-    "types/shims-vue.d.ts"
   ],
   "exclude": ["node_modules", "dist", "**/*.js"]
 }

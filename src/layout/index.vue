@@ -37,15 +37,22 @@ import {} from 'vue'
 }
 
 .fixed-header {
-  position: fixed;
-  top: 0;
-  right: 0;
+  position: relative;
+  // top: 0;
+  // right: 0;
   z-index: 9;
-  width: calc(100% - #{$sideBarWidth});
-  transition: width #{$sideBarDuration};
+  padding-left: 1p;
 }
 
 .hideSidebar .fixed-header {
   width: calc(100% - #{$hideSideBarWidth});
 }
+
+// .app-main {
+//   min-height: calc(100vh - 64px);
+// }
+
+// .fixed-header + .app-main {
+//   padding-top: 84px;
+// }
 </style>
