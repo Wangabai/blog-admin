@@ -27,6 +27,10 @@ const router = useRouter()
 const getArticleDetail = () => {
   articleDetail({ id: route.query.id }).then((res) => {
     if (res.code === 200) {
+      res.data.createTime = res.data.createTime.replace('T', ' ')
+      res.data.createTime = res.data.createTime.replace('.000Z', ' ')
+      res.data.updateTime = res.data.updateTime.replace('T', ' ')
+      res.data.updateTime = res.data.updateTime.replace('.000Z', ' ')
       detail.value = res.data
       console.log(detail.value)
     }

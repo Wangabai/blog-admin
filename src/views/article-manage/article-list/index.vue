@@ -26,16 +26,17 @@
     :isShowCheckBox="false"
     :total="total"
     :pageCount="pageCount"
-    :currentPage="pageSize"
+    :currentPage="pageNum"
     @handleSizeChange="handleSizeChange"
     @handleCurrentChange="handleCurrentChange"
   >
     <template v-slot:opration>
-      <el-table-column label="操作" fixed="right" width="140">
+      <el-table-column label="操作" fixed="right" width="160">
         <template v-slot="{ row }">
           <div class="opration_row">
-            <span @click="goto(2, row)">详情</span>
-            <span @click="goto(3, row)">编辑</span>
+            <span @click="goto(2, row.id)">详情</span>
+            <span @click="goto(3, row.id)">编辑</span>
+            <span @click="del(row.id)">删除</span>
           </div>
         </template>
       </el-table-column>
@@ -44,9 +45,10 @@
 </template>
 
 <script setup lang="ts">
-import { articleList } from '@/api/article'
+import { articleList, articleDel } from '@/api/article'
 import { ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 // 搜索框
 const keyword = ref('')
@@ -105,7 +107,7 @@ const handleCurrentChange = (val: number) => {
 
 // 新增博客
 const router = useRouter()
-const goto = (rType: number, val?: any) => {
+const goto = (rType: number, val?: number) => {
   console.log(val)
   if (rType === 1) {
     router.push({
@@ -113,19 +115,38 @@ const goto = (rType: number, val?: any) => {
       params: { type: 'add' }
     })
   } else if (rType === 2) {
-    console.log('详情')
     router.push({
-      query: { id: val.id },
+      query: { id: val },
       name: 'ArticleDetail'
     })
   } else if (rType === 3) {
-    console.log('编辑')
     router.push({
-      query: { id: val.id },
+      query: { id: val },
       name: 'ArticleAdd',
       params: { type: 'edit' }
     })
   }
+}
+
+// 删除
+const del = (val: number) => {
+  ElMessageBox.confirm('确认删除文章？', '警告', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(() => {
+      articleDel({ id: val }).then((res) => {
+        if (res.code === 200) {
+          getArticleList()
+          ElMessage({
+            type: 'success',
+            message: '删除成功'
+          })
+        }
+      })
+    })
+    .catch(() => {})
 }
 </script>
 <style lang="scss" scoped></style>

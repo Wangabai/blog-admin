@@ -286,7 +286,7 @@ const emit = defineEmits([
 let tableHeight: number | null = null
 let allChecked = false // 全选按钮
 let checkedNum = 0 // 所选数
-let selection: any[] = []// 选中项列表
+let selection: any[] = [] // 选中项列表
 const eltable: any = ref(null)
 
 const testrightClick = (row: any, column: any, event: { cancelBubble: boolean }) => {
