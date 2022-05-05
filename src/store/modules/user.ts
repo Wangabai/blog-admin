@@ -33,7 +33,13 @@ export default {
     // 登陆请求
     login(context: any, userInfo: object) {
       return new Promise<void>((resolve, reject) => {
-        login(userInfo)
+        login<{
+          code: number
+          data: {
+            token: string
+          }
+          message: string
+        }>(userInfo)
           .then((data) => {
             context.commit('setToken', data.data.token)
             router.push('/')

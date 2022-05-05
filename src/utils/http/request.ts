@@ -3,38 +3,40 @@
  * @Description: http封装请求
  * @Date: 2022-04-01 13:30:18
  */
-import Axios, { AxiosRequestConfig, AxiosInstance } from 'axios'
-import {
-  cancelTokenType,
-  RequestMethods,
-  EnclosureHttpRequestConfig,
-  EnclosureHttpResoponse,
-  EnclosureHttpError
-} from './types.d'
+import Axios, { AxiosRequestConfig, AxiosInstance, CancelTokenStatic, AxiosResponse } from 'axios'
+import { RequestMethods, cancelTokenType, EnclosureHttpError } from './types.d'
 import { transformConfigByMethod } from './utils'
-import { genConfig, jsonReg, errMsgMap, timeoutReg, netErrReg } from './config'
+import { genConfig, errMsgMap } from './config'
 import router from '@/router'
 import { removeItem } from '@/utils/storage'
 import { ElMessage } from 'element-plus'
 import store from '@/store'
-
 class EnclosureHttp {
   constructor() {
     this.httpInterceptorsRequest()
     this.httpInterceptorsResponse()
   }
-  // 初始化配置对象
-  private static initConfig: EnclosureHttpRequestConfig = {}
 
-  // 保存 EnclosureHttp实例
-  private static EnclosureHttpInstance: EnclosureHttp
+  // 保存当前Axios实例对象
+  private static axiosInstance: AxiosInstance = Axios.create(genConfig())
 
-  private beforeRequestCallback: EnclosureHttpRequestConfig['beforeRequestCallback'] = undefined
-
-  private beforeResponseCallback: EnclosureHttpRequestConfig['beforeResponseCallback'] = undefined
+  // axios取消对象
+  private CancelToken: CancelTokenStatic = Axios.CancelToken
 
   // 取消的凭证数组
   private sourceTokenList: Array<cancelTokenType> = []
+
+  // 记录当前这一次cancelToken的key
+  private currentCancelTokenKey = ''
+
+  /**
+   * @description 生成唯一取消key
+   * @param config axios配置
+   * @returns string
+   */
+  private static genUniqueKey(config: AxiosRequestConfig): string {
+    return `${config.url}--${JSON.stringify(config.data)}`
+  }
 
   /**
    * @description 取消重复请求
@@ -63,21 +65,17 @@ class EnclosureHttp {
    */
   private httpInterceptorsRequest(): void {
     EnclosureHttp.axiosInstance.interceptors.request.use(
-      (config: EnclosureHttpRequestConfig) => {
+      (config: AxiosRequestConfig) => {
+        const $config = config
+        const cancelKey = EnclosureHttp.genUniqueKey($config)
+        $config.cancelToken = new this.CancelToken((cancelExecutor: (cancel: any) => void) => {
+          this.sourceTokenList.push({ cancelKey, cancelExecutor })
+        })
         this.cancelRepeatRequest()
-        // 优先判断post/get等方法是否传入回掉，否则执行初始化设置等回掉
-        if (typeof this.beforeRequestCallback === 'function') {
-          this.beforeRequestCallback(config)
-          this.beforeRequestCallback = undefined
-          return config
-        }
-        if (EnclosureHttp.initConfig.beforeRequestCallback) {
-          EnclosureHttp.initConfig.beforeRequestCallback(config)
-          return config
-        }
+        this.currentCancelTokenKey = cancelKey
         const token = store.getters.token
-        if (token) config.headers['Authorization'] = `Bearer ${token}`
-        return config
+        if (token) ($config as any).headers['Authorization'] = `Bearer ${token}`
+        return $config
       },
       (error) => {
         return Promise.reject(error)
@@ -92,41 +90,29 @@ class EnclosureHttp {
   private httpInterceptorsResponse(): void {
     const instance = EnclosureHttp.axiosInstance
     instance.interceptors.response.use(
-      async (response: EnclosureHttpResoponse) => {
-        // 优先判断post/get等方法是否传入回掉，否则执行初始化设置等回掉
-        if (typeof this.beforeResponseCallback === 'function') {
-          this.beforeResponseCallback(response)
-          this.beforeResponseCallback = undefined
-          return response.data
-        }
-        if (EnclosureHttp.initConfig.beforeResponseCallback) {
-          EnclosureHttp.initConfig.beforeResponseCallback(response)
-          return response.data
-        }
-        let res = response.data
-        // blob处理 处理文件下载
-        if (response.config.responseType === 'blob') {
-          if (jsonReg.test(response.data.type)) {
-            try {
-              const text = await response.data.text()
-              res = JSON.parse(text)
-            } catch (err: any) {
-              return Promise.reject(err.message || err)
-            }
-          } else {
-            return Promise.resolve(response)
+      async (response: AxiosResponse) => {
+        // 判断当前的请求中是否在 取消token数组理存在，如果存在则移除（单次请求流程）
+        if (this.currentCancelTokenKey) {
+          const haskey = this.sourceTokenList.filter(
+            (cancelToken) => cancelToken.cancelKey === this.currentCancelTokenKey
+          ).length
+          if (haskey) {
+            this.sourceTokenList = this.sourceTokenList.filter(
+              (cancelToken) => cancelToken.cancelKey !== this.currentCancelTokenKey
+            )
+            this.currentCancelTokenKey = ''
           }
         }
+        let res = response.data
         if (res.code === 401 || res.code === 404) {
           setTimeout(() => {
             router.push('/login')
           }, 1000)
         }
         if (res.code === 200) {
-          return Promise.resolve(res)
+          return res
         } else {
           ElMessage.error(res.message)
-          // 继续回调,改变loading
           return Promise.resolve(res)
         }
       },
@@ -148,12 +134,6 @@ class EnclosureHttp {
             setTimeout(() => {
               router.push('/login')
             }, 1000)
-          } else if (timeoutReg.test(error.message)) {
-            msg = '网络超时'
-            ElMessage.error(msg)
-          } else if (netErrReg.test(error.message)) {
-            msg = '网络异常'
-            ElMessage.error(msg)
           }
           ElMessage.error(msg)
         }
@@ -166,17 +146,17 @@ class EnclosureHttp {
     method: RequestMethods,
     url: string,
     param?: AxiosRequestConfig,
-    axiosConfig?: EnclosureHttpRequestConfig
+    axiosConfig?: AxiosRequestConfig
   ): Promise<T> {
     const config = transformConfigByMethod(param, {
       method,
       url,
       ...axiosConfig
-    } as EnclosureHttpRequestConfig)
-    return new Promise((resolve, reject) => {
+    } as AxiosRequestConfig)
+    return new Promise<T>((resolve, reject) => {
       EnclosureHttp.axiosInstance
-        .request(config)
-        .then((response: EnclosureHttpResoponse) => {
+        .request<any, T>(config)
+        .then((response) => {
           resolve(response)
         })
         .catch((error: any) => {
@@ -185,14 +165,15 @@ class EnclosureHttp {
     })
   }
 
-  // 保存当前Axios实例对象
-  private static axiosInstance: AxiosInstance = Axios.create(genConfig())
-
-  public post<T>(url: string, params?: T, config?: EnclosureHttpRequestConfig): Promise<T> {
+  public post<T>(
+    url: string,
+    params?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
+  ): Promise<T> {
     return this.request<T>('post', url, params, config)
   }
 
-  public get<T>(url: string, params?: T, config?: EnclosureHttpRequestConfig): Promise<T> {
+  public get<T>(url: string, params?: AxiosRequestConfig, config?: AxiosRequestConfig): Promise<T> {
     return this.request<T>('get', url, params, config)
   }
 }

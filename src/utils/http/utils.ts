@@ -3,32 +3,30 @@
  * @Description: http请求工具方式
  * @Date: 2022-04-02 14:33:57
  */
-import { EnclosureHttpRequestConfig } from './types.d';
+import { AxiosRequestConfig } from 'axios'
 
 export function excludeProps<T extends { [key: string]: any }>(
   origin: T,
   prop: string
 ): { [key: string]: T } {
   return Object.keys(origin)
-    .filter(key => !prop.includes(key))
+    .filter((key) => !prop.includes(key))
     .reduce((res, key) => {
-      res[key] = origin[key];
-      return res;
-    }, {} as { [key: string]: T });
+      res[key] = origin[key]
+      return res
+    }, {} as { [key: string]: T })
 }
 
 export function transformConfigByMethod(
   params: any,
-  config: EnclosureHttpRequestConfig
-): EnclosureHttpRequestConfig {
-  const { method } = config;
-  const props = ['delete', 'get', 'head', 'options'].includes(
-    method!.toLocaleLowerCase()
-  )
+  config: AxiosRequestConfig
+): AxiosRequestConfig {
+  const { method } = config
+  const props = ['delete', 'get', 'head', 'options'].includes(method!.toLocaleLowerCase())
     ? 'params'
-    : 'data';
+    : 'data'
   return {
     ...config,
-    [props]: params,
-  };
+    [props]: params
+  }
 }
