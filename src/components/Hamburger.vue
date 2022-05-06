@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-name: 'Breadcrumb'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 

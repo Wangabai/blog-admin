@@ -11,10 +11,7 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  tip: {
-    type: String,
-    default: ''
-  }
+  tip: String
 })
 </script>
 

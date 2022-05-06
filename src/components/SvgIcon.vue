@@ -14,16 +14,12 @@
 import { computed } from 'vue'
 import { isExternal } from '@/utils/filters'
 
-const props = defineProps({
-  iconClass: {
-    type: String,
-    required: true
-  },
-  className: {
-    type: String,
-    default: ''
-  }
-})
+interface Props {
+  iconClass: string
+  className?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {})
 
 const external = computed(() => {
   return isExternal(props.iconClass)

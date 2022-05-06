@@ -38,66 +38,37 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-const props = defineProps({
+interface Props {
   // 输入框类型 text，textarea 和其他 原生 input 的 type 值
-  inputType: {
-    type: String,
-    default: ''
-  },
-  // icon
-  icon: {
-    type: String,
-    default: ''
-  },
+  inputType?: string
+  icon?: string
   // 占位文本
-  placeholder: {
-    type: String,
-    default: '请输入关键字搜索'
-  },
+  placeholder?: string
   // 输入框头部图标
-  prefixIcon: {
-    type: String,
-    default: ''
-  },
+  prefixIcon?: string
   // 输入框尾部图标
-  suffixIcon: {
-    type: String,
-    default: ''
-  },
+  suffixIcon?: string
   // 是否只读
-  readonly: {
-    type: Boolean,
-    default: false
-  },
+  readonly?: boolean
   // 设置最小值
-  min: {
-    type: String,
-    default: ''
-  },
-  title: {
-    type: String,
-    default: ''
-  },
-  size: {
-    type: String,
-    default: 'medium'
-  },
-  hval: {
-    type: String,
-    default: ''
-  },
+  min?: string
+  title?: string
+  size?: string
+  hval: string
   // 是否禁用
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  isShowIcon: {
-    type: Boolean,
-    default: false
-  }
+  disabled?: boolean
+  isShowIcon?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  placeholder: '请输入关键字搜索',
+  readonly: false,
+  size: 'medium',
+  disabled: false,
+  isShowIcon: false
 })
 
-const emit = defineEmits(['blur', 'input', 'focus', 'clear', 'click', 'enter'])
+const emit = defineEmits(['blur', 'input', 'focus', 'clear', 'enter'])
 const inputValue = ref('')
 
 watch(
@@ -121,9 +92,6 @@ const focus = () => {
 }
 const clear = () => {
   emit('clear', inputValue.value)
-}
-const click = () => {
-  emit('click', inputValue.value)
 }
 const enter = () => {
   emit('enter', inputValue.value)

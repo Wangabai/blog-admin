@@ -155,11 +155,11 @@ class EnclosureHttp {
     } as AxiosRequestConfig)
     return new Promise<T>((resolve, reject) => {
       EnclosureHttp.axiosInstance
-        .request<any, T>(config)
+        .request<T,any>(config)
         .then((response) => {
           resolve(response)
         })
-        .catch((error: any) => {
+        .catch((error) => {
           reject(error)
         })
     })

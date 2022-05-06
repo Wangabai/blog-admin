@@ -130,145 +130,89 @@
 </template>
 <script setup lang="ts">
 import { ref, onBeforeUnmount } from 'vue'
-const props = defineProps({
-  objectSpanMethod: {
-    type: Function,
-    default: null
-  },
+interface ColConfig {
+  slot?: string
+  maxLength?: number
+  headTip?: string
+  prop: string
+  isNum?: boolean
+  label?: string
+}
+
+interface Props {
+  objectSpanMethod?: void
   // 排序
-  defaultSort: {
-    type: Object,
-    default: () => ({})
-  },
+  defaultSort?: object
   // 表头
-  colConfigs: {
-    type: Array,
-    default: function () {
-      return []
-    }
-  },
+  colConfigs: ColConfig[]
   // 表格数据
-  data: {
-    type: Array,
-    default: function () {
-      return []
-    }
-  },
+  data: []
   // 是否显示表头
-  showHeader: {
-    type: Boolean,
-    default: true
-  },
-  showSummary: {
-    type: Boolean,
-    default: false
-  },
+  showHeader?: boolean
+  showSummary?: boolean
   // 固定表头的表格
-  rowHeight: {
-    type: String,
-    default: null
-  },
+  rowHeight?: string
   // 是否带有纵向边框
-  border: {
-    type: Boolean,
-    default: false
-  },
+  border?: boolean
   // 是否需要设置最大高度,弹窗中的table会用到 默认false
-  isSetHeight: {
-    type: Boolean,
-    default: false
-  },
+  isSetHeight?: boolean
   // loading效果
-  loading: {
-    type: Boolean,
-    default: false
-  },
+  loading?: boolean
   // 表格类名
-  className: {
-    type: String,
-    default: ''
-  },
+  className?: string
   // 列表是否可选择
-  isShowCheckBox: {
-    type: Boolean,
-    default: false
-  },
-  // width:{
-  //   type: String,
-  //   default: ""
-  // },
+  isShowCheckBox?: boolean
   // 列表是否显示序号
-  isShowIndex: {
-    type: Boolean,
-    default: false
-  },
+  isShowIndex?: boolean
   // 是否需要右键
-  isrightEvent: {
-    type: Boolean,
-    default: false
-  },
+  isrightEvent?: boolean
   // 是否需要双击
-  isrowdblEvent: {
-    type: Boolean,
-    default: false
-  },
+  isrowdblEvent?: boolean
   // 是否需要点击单元格
-  iscellClick: {
-    type: Boolean,
-    default: false
-  },
+  iscellClick?: boolean
   // 当前页
-  currentPage: {
-    type: Number,
-    default: 1
-  },
+  currentPage?: number
   // 每页条数
-  pageSize: {
-    type: Number,
-    default: 10
-  },
+  pageSize?: number
   // 总条数
-  total: {
-    type: Number,
-    default: 0
-  },
+  total?: number
   // 总页数
-  pageCount: {
-    type: Number,
-    default: 0
-  },
+  pageCount?: number
   // 最大页码按钮数
-  pagerCount: {
-    type: Number,
-    default: 7
-  },
+  pagerCount?: number
   // 排除的高度，用于计算表格最大高度
-  exceptHeight: {
-    type: [Number, String],
-    default: 0
-  },
+  exceptHeight?: number | string
   // 是否显示全选
-  showSelectAll: {
-    type: Boolean,
-    default: false
-  },
-  pageSizes: {
-    type: Array,
-    default: () => [10, 20, 30, 40, 50]
-  },
-  isShowNull: {
-    type: Boolean,
-    default: true
-  },
-  layout: {
-    type: String,
-    default: 'total, sizes, prev, pager, next, jumper'
-  },
-  rowClassName: {
-    type: Function,
-    default: function () {}
-  }
+  showSelectAll?: boolean
+  pageSizes?: number[]
+  isShowNull?: boolean
+  layout?: string
+  rowClassName?: void
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  showHeader: true,
+  showSummary: false,
+  border: false,
+  isSetHeight: false,
+  loading: false,
+  isShowCheckBox: false,
+  isShowIndex: false,
+  isrightEvent: false,
+  isrowdblEvent: false,
+  iscellClick: false,
+  currentPage: 1,
+  pageSize: 10,
+  total: 0,
+  pageCount: 0,
+  pagerCount: 7,
+  exceptHeight: 0,
+  showSelectAll: false,
+  pageSizes: () => [10, 20, 30, 40, 50],
+  isShowNull: true,
+  layout: 'total, sizes, prev, pager, next, jumper'
 })
+
 const emit = defineEmits([
   'rightEvent',
   'rowdblEvent',

@@ -4,23 +4,20 @@
  * @Date: 2022-04-11 10:12:23
 -->
 <template>
-    <div class="title_content">
-      <span>{{ currentTitle ? currentTitle : $route.meta.title }}</span>
-      <div class="right_slot">
-        <slot name="right"></slot>
-      </div>
+  <div class="title_content">
+    <span>{{ currentTitle ? currentTitle : $route.meta.title }}</span>
+    <div class="right_slot">
+      <slot name="right"></slot>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {} from 'vue'
-const props = defineProps({
-  // 当前页面的title,编辑和新建共用一个页面时进行区分
-  currentTitle: {
-    type: String,
-    default: ''
-  }
-})
+interface Props {
+  currentTitle?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {})
 </script>
 <style lang="scss" scoped>
 .title_content {
