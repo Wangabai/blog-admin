@@ -105,9 +105,7 @@ class EnclosureHttp {
         }
         let res = response.data
         if (res.code === 401 || res.code === 404) {
-          setTimeout(() => {
-            router.push('/login')
-          }, 1000)
+          router.push('/login')
         }
         if (res.code === 200) {
           return res
@@ -155,7 +153,7 @@ class EnclosureHttp {
     } as AxiosRequestConfig)
     return new Promise<T>((resolve, reject) => {
       EnclosureHttp.axiosInstance
-        .request<T,any>(config)
+        .request<T, any>(config)
         .then((response) => {
           resolve(response)
         })

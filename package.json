@@ -10,17 +10,18 @@
     "json-server": "json-server __json_server_mock__/db.json --watch --port 8001 --middlewares ./__json_server_mock__/middleware.js"
   },
   "dependencies": {
-    "@wangeditor/editor": "^5.0.0",
-    "@wangeditor/editor-for-vue": "^5.1.10",
     "axios": "^0.26.1",
-    "element-plus": "^1.1.0-beta.15",
+    "dayjs": "^1.11.2",
+    "element-plus": "^2.2.0",
     "path-browserify": "^1.0.1",
     "qs": "^6.10.3",
     "vue": "^3.2.25",
     "vue-router": "^4.0.3",
+    "vue3-markdown-it": "^1.0.10",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@element-plus/icons-vue": "^1.1.4",
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
     "@toast-ui/editor": "^3.0.2",

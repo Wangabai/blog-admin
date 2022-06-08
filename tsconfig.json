@@ -18,12 +18,9 @@
     },
     "suppressImplicitAnyIndexErrors": true, // 允许索引
     // "noUnusedParameters": false // 不能有声明后未被使用的变量或参数
-
+    "types": ["node", "vite/client"],
+    "typeRoots": ["./node_modules/@types/", "./types"]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue","types/*.d.ts"],
   "exclude": ["node_modules", "dist", "**/*.js"]
 }

@@ -4,7 +4,7 @@
  * @Date: 2022-04-01 10:21:22
 -->
 <template>
-  <div>首页</div>
+  <div>待开发</div>
 </template>
 
 <script setup lang="ts">

@@ -65,10 +65,11 @@ const clearKeyword = () => {
 
 const theadName = [
   { prop: 'articleName', label: '博客标题' },
-  { prop: 'author', label: '博客作者' },
-  { prop: 'content', label: '博客简介' },
+  { prop: 'intro', label: '博客简介' },
   { prop: 'like', label: '点赞量' },
   { prop: 'access', label: '访问量' },
+  { prop: 'createTime', label: '创建时间'},
+  { prop: 'updateTime', label: '修改时间'},
   { slot: 'opration' }
 ]
 let tableData = ref([])

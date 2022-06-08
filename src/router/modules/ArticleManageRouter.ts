@@ -40,6 +40,14 @@ export default {
       meta: {
         title: '博客详情'
       }
+    },
+    {
+      path: '/article/tag-category/list',
+      name: 'TagCategoryList',
+      component: () => import('@/views/article-manage/article-tag-category/index.vue'),
+      meta: {
+        title: '分类/标签'
+      }
     }
   ]
 }

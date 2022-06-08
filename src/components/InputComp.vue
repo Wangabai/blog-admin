@@ -63,7 +63,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   placeholder: '请输入关键字搜索',
   readonly: false,
-  size: 'medium',
   disabled: false,
   isShowIcon: false
 })

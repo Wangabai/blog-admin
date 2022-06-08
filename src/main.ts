@@ -13,6 +13,8 @@ import 'virtual:svg-icons-register'; // 引入svg icon注册脚本
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import zhCn from 'element-plus/es/locale/lang/zh-cn';
+import Markdown from 'vue3-markdown-it';
+import 'highlight.js/styles/monokai.css';
 
 // 导入权限控制模块
 import './permission'
@@ -23,4 +25,5 @@ app.use(store)
   .use(router)
   .use(components)
   .use(ElementPlus, { locale: zhCn })
+  .use(Markdown)
   .mount('#app');

@@ -8,3 +8,9 @@ export const USER_SERVER = '/api/user'
 
 // 文章接口配置
 export const ARTICLE_SERVER = '/api/article'
+
+// 文章接口配置
+export const TAG_SERVER = '/api/tag'
+
+// 文章接口配置
+export const CATEGORY_SERVER = '/api/category'
