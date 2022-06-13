@@ -8,8 +8,9 @@
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "esModuleInterop": true,
+    "skipLibCheck": true, // 能解决Element 打包问题
     "lib": ["es2017", "dom"],
     "baseUrl": "./",
     "paths": {

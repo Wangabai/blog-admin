@@ -47,5 +47,24 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, 'src/')
     }
+  },
+  
+  build: {
+    rollupOptions: {
+      external: [
+        "element-plus", 
+      ],
+    },
+  },
+  // 跨域
+  server: {
+    // port: 3000,
+    // base: "./ ", //生产环境路径
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8088',
+        changeOrigin: true
+      }
+    }
   }
 })

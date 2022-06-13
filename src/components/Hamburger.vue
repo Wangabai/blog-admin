@@ -15,6 +15,7 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 const icon = computed(() => {
+  console.log(store.getters.sidebarOpened)
   return store.getters.sidebarOpened ? 'el-icon-s-fold' : 'el-icon-s-unfold'
 })
 

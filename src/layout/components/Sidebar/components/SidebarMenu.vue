@@ -5,7 +5,7 @@
 -->
 <template>
   <el-menu
-    :collapse="!$store.getters.sidebarOpened"
+    :collapse="!store.getters.sidebarOpened"
     :default-active="activeMenu"
     :uniqueOpened="true"
     background-color="#35435a"
@@ -22,6 +22,7 @@ import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { filterRoutes, generateMenus } from '@/utils/route'
 import SidebarItem from './SidebarItem.vue'
+import store from '@/store'
 
 // 默认激活
 const route = useRoute()

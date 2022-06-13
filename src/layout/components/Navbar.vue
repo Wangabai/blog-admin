@@ -12,9 +12,7 @@
       <!-- 头像 -->
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <svg-icon
-            icon-class="bianji"
-          ></svg-icon>
+          <svg-icon icon-class="bianji"></svg-icon>
         </div>
         <template #dropdown>
           <el-dropdown-menu class="user-dropdown">
@@ -93,7 +91,7 @@ const logout = () => {
         margin-top: 5px;
         position: relative;
         .el-avatar {
-          --el-avatar-background-color: none;
+          --el-avatar-bg-color: none;
           margin-right: 12px;
         }
       }

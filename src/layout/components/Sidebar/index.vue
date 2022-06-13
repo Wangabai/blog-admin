@@ -6,7 +6,7 @@
 <template>
   <div>
     <div class="logo-container">
-      <h1 class="logo-title" v-if="$store.getters.sidebarOpened">
+      <h1 class="logo-title" v-if="store.getters.sidebarOpened">
         王阿白的博客后台管理系统
       </h1>
       <el-avatar
@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import SidebarMenu from './components/SidebarMenu.vue'
 import {} from 'vue'
+import store from '@/store'
 const logoHeight = 50
 </script>
 <style lang="scss" scoped>
