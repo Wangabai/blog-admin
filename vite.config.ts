@@ -49,11 +49,11 @@ export default defineConfig({
     }
   },
 
-  build: {
-    rollupOptions: {
-      external: ['element-plus']
-    }
-  },
+  // build: {
+  //   rollupOptions: {
+  //     external: ['element-plus']
+  //   }
+  // },
   // 跨域
   server: {
     // port: 3000,
