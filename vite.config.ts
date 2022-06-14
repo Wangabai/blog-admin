@@ -48,13 +48,11 @@ export default defineConfig({
       '@': resolve(__dirname, 'src/')
     }
   },
-  
+
   build: {
     rollupOptions: {
-      external: [
-        "element-plus", 
-      ],
-    },
+      external: ['element-plus']
+    }
   },
   // 跨域
   server: {
