@@ -163,7 +163,6 @@ const route = useRoute()
 const getArticleDetail = async () => {
   const { code, data } = await articleDetail({ id: route.query.id })
   if (code === 200) {
-    console.log(formData.value)
     mkEditor.setMarkdown(data.content)
     formData.value.title = data.articleName
     formData.value.tag =

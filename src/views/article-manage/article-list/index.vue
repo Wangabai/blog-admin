@@ -109,7 +109,6 @@ const handleCurrentChange = (val: number) => {
 // 新增博客
 const router = useRouter()
 const goto = (rType: number, val?: number) => {
-  console.log(val)
   if (rType === 1) {
     router.push({
       name: 'ArticleAdd',
