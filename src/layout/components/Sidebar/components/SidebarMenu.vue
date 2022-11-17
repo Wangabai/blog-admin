@@ -5,13 +5,13 @@
 -->
 <template>
   <el-menu
-    :collapse="!store.getters.sidebarOpened"
     :default-active="activeMenu"
     :uniqueOpened="true"
     background-color="#35435a"
     text-color="#bfcbd9"
     active-text-color="#fff"
     router
+    :collapse="!appStore.sidebarOpened"
   >
     <SidebarItem v-for="item in routes" :key="item.path" :route="item"></SidebarItem>
   </el-menu>
@@ -22,8 +22,9 @@ import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { filterRoutes, generateMenus } from '@/utils/route'
 import SidebarItem from './SidebarItem.vue'
-import store from '@/store'
+import { AppStore } from '@/store/modules/app'
 
+const appStore = AppStore()
 // 默认激活
 const route = useRoute()
 const activeMenu = computed(() => {

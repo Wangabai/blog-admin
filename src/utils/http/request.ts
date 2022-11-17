@@ -10,7 +10,7 @@ import { genConfig, errMsgMap } from './config'
 import router from '@/router'
 import { removeItem } from '@/utils/storage'
 import { ElMessage } from 'element-plus'
-import store from '@/store'
+import { UserStore } from '@/store'
 class EnclosureHttp {
   constructor() {
     this.httpInterceptorsRequest()
@@ -73,7 +73,8 @@ class EnclosureHttp {
         })
         this.cancelRepeatRequest()
         this.currentCancelTokenKey = cancelKey
-        const token = store.getters.token
+        const userStore = UserStore()
+        const token = userStore.token
         if (token) ($config as any).headers['Authorization'] = `Bearer ${token}`
         return $config
       },

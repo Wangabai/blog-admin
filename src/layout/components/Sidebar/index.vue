@@ -6,15 +6,8 @@
 <template>
   <div>
     <div class="logo-container">
-      <h1 class="logo-title" v-if="store.getters.sidebarOpened">
-        王阿白的博客后台管理系统
-      </h1>
-      <el-avatar
-        :size="logoHeight"
-        shape="square"
-        src="/src/assets/favicon.png"
-        v-else
-      />
+      <h1 class="logo-title" v-if="appStore.sidebarOpened">王阿白的博客后台管理系统</h1>
+      <el-avatar :size="logoHeight" shape="square" src="/src/assets/favicon.png" v-else />
     </div>
     <el-scrollbar>
       <SidebarMenu></SidebarMenu>
@@ -24,13 +17,14 @@
 
 <script setup lang="ts">
 import SidebarMenu from './components/SidebarMenu.vue'
-import {} from 'vue'
-import store from '@/store'
+import { AppStore } from '@/store/modules/app'
+
+const appStore = AppStore()
 const logoHeight = 50
 </script>
 <style lang="scss" scoped>
 .logo-container {
-  height: v-bind(logoHeight) + "px";
+  height: v-bind(logoHeight) + 'px';
   padding: 7px 0 7px 0;
   display: flex;
   align-items: center;

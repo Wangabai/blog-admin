@@ -4,7 +4,8 @@
  * @Date: 2022-03-25 16:39:29
 -->
 <template>
-  <div class="app-wrapper" :class="[store.getters.sidebarOpened ? 'openSidebar' : 'hideSidebar']">
+  <!--  -->
+  <div class="app-wrapper" :class="[appStore.sidebarOpened ? 'openSidebar' : 'hideSidebar']">
     <!-- 左侧 -->
     <Sidebar class="sidebar-container"></Sidebar>
     <div class="main-container">
@@ -22,9 +23,8 @@
 import Navbar from './components/Navbar.vue'
 import Sidebar from './components/Sidebar/index.vue'
 import AppMain from './components/AppMain.vue'
-import store from '@/store'
-
-import {} from 'vue'
+import { AppStore } from '@/store/modules/app'
+const appStore = AppStore()
 </script>
 <style lang="scss" scoped>
 @import '@/styles/mixin.scss';

@@ -34,7 +34,9 @@
         ></el-input>
         <span class="show-pwd"
           ><span class="svg-container" @click="onChangePwdType">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"></svg-icon> </span
+            <svg-icon
+              :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+            ></svg-icon> </span
         ></span>
       </el-form-item>
 
@@ -51,11 +53,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { UserStore } from '@/store'
 
 import type { ElForm } from 'element-plus'
 type FormInstance = InstanceType<typeof ElForm>
+
+const userStore = UserStore()
 
 const loginForm = ref({
   username: 'test',
@@ -90,7 +94,6 @@ const onChangePwdType = () => {
 }
 
 const loading = ref(false)
-const store = useStore()
 const loginFromRef = ref<FormInstance>()
 const router = useRouter()
 const handlerLogin = (formEl: FormInstance | undefined) => {
@@ -98,15 +101,14 @@ const handlerLogin = (formEl: FormInstance | undefined) => {
   formEl.validate((valid: any, val: any) => {
     if (valid) {
       loading.value = true
-      store
-        .dispatch('user/login', loginForm.value)
+      userStore
+        .login(loginForm.value)
         .then(() => {
-          const token = store.getters.token
+          const token = userStore.token
           // 登录后操作
           router.push('/')
         })
-        .catch((err) => {
-        })
+        .catch((err) => {})
       loading.value = false
     }
   })
@@ -147,7 +149,6 @@ $cursor: #fff;
       input {
         background: transparent;
         border: 0px;
-        -webkit-appearance: none;
         border-radius: 0px;
         padding: 12px 5px 12px 15px;
         color: $light_gray;

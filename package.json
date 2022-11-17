@@ -12,11 +12,12 @@
   "dependencies": {
     "axios": "^0.26.1",
     "path-browserify": "^1.0.1",
+    "pinia": "^2.0.23",
+		"pinia-plugin-persistedstate": "^1.6.1",
     "qs": "^6.10.3",
     "vue": "^3.2.25",
     "vue-router": "^4.0.3",
-    "vue3-markdown-it": "^1.0.10",
-    "vuex": "^4.0.0"
+    "vue3-markdown-it": "^1.0.10"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

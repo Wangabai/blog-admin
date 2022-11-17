@@ -4,23 +4,21 @@
  * @Date: 2022-04-06 14:34:37
 -->
 <template>
-  <div class="hamburger-container" @click="toggleClick">
+  <div class="hamburger-container" @click="triggerSidebarOpened">
     <i class="hamburger" :class="icon"></i>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { AppStore } from '@/store/modules/app'
 
-const store = useStore()
+const appStore = AppStore()
 const icon = computed(() => {
-  return store.getters.sidebarOpened ? 'el-icon-s-fold' : 'el-icon-s-unfold'
+  return appStore.sidebarOpened ? 'el-icon-s-fold' : 'el-icon-s-unfold'
 })
 
-const toggleClick = () => {
-  store.commit('app/triggerSidebarOpened')
-}
+const { triggerSidebarOpened } = appStore
 </script>
 <style lang="scss" scoped>
 .hamburger-container {

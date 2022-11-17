@@ -3,19 +3,18 @@
  * @Description: 菜单栏收缩判断
  * @Date: 2022-03-29 14:46:14
  */
-export interface appStateTypes {
-  sidebarOpened: boolean
-}
+import { defineStore } from "pinia";
+import { AppState } from '../interface';
 
-export default {
-  namespaced: true,
-  state: () => ({
+export const AppStore = defineStore({
+  id: 'AppState',
+  state: (): AppState => ({
     sidebarOpened: true
   }),
-  mutations: {
-    triggerSidebarOpened(state: appStateTypes) {
-      state.sidebarOpened = !state.sidebarOpened
+  getters: {},
+  actions: {
+    triggerSidebarOpened() {
+      this.sidebarOpened = !this.sidebarOpened
     }
-  },
-  actions: {}
-}
+  }
+})

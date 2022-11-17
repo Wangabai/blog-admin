@@ -26,15 +26,14 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from 'vuex'
+import { UserStore } from '@/store'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import {} from 'vue'
-const store = useStore()
+const userStore = UserStore()
 const router = useRouter()
 const logout = () => {
-  store
-    .dispatch('user/logout')
+  userStore.logout()
     .then(() => {
       ElMessage.success('退出成功')
     })

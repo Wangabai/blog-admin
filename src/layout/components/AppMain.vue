@@ -23,10 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { isTags } from '@/utils/tags'
-import { useStore } from 'vuex'
 
 // 生成title
 // const getTitle = (route: any) => {
@@ -40,7 +37,6 @@ import { useStore } from 'vuex'
 //   return title
 // }
 
-const store = useStore()
 const route = useRoute()
 // watch(
 //   route,

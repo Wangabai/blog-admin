@@ -3,29 +3,59 @@
  * @Description: VUEX入口
  * @Date: 2022-04-01 10:16:27
  */
-import { createStore } from 'vuex'
-import user from './modules/user'
-import app from './modules/app'
+import { defineStore } from "pinia";
+import { UserState } from './interface';
+import { setItem, getItem, removeAllItem } from '@/utils/storage'
+import { TOKEN } from '@/constant'
+import { login, getUserInfo } from '@/api/user'
+import router from '@/router'
+import { setTimeStamp } from '@/utils/auth'
 
-export default createStore({
-  state: {},
-  getters: {
-    token: (state: any) => state.user.token,
-    userInfo: (state: any) => state.user.userInfo,
-    /**
-     * @returns true 表示已存在用户信息
-     */
-    hasUserInfo: (state: any) => {
-      return JSON.stringify(state.user.userInfo) !== '{}'
+export const UserStore = defineStore({
+  id: 'UserState',
+  state: (): UserState => ({
+    token: getItem(TOKEN) || '',
+    userInfo: {}
+  }),
+  getters: {},
+  actions: {
+    // 登陆请求
+    login(userInfo: object) {
+      return new Promise<void>((resolve, reject) => {
+        login<{
+          code: number
+          data: {
+            token: string
+          }
+          message: string
+        }>(userInfo)
+          .then((data) => {
+            this.token = data.data.token
+            setItem(TOKEN, data.data.token)
+            router.push('/')
+            setTimeStamp()
+            resolve()
+          })
+          .catch((err) => reject(err))
+      })
     },
-    sidebarOpened: (state: any) => state.app.sidebarOpened
-  },
-
-  mutations: {},
-
-  actions: {},
-  modules: {
-    user,
-    app
+    // 获取用户信息
+    async getUserInfo() {
+      const { data } = await getUserInfo()
+      this.userInfo = data
+      return data
+    },
+    // 退出登陆
+    logout() {
+      // resetRouter()
+      return new Promise<void>((resolve, reject) => {
+        this.token = ''
+        setItem(TOKEN, '')
+        this.userInfo = {}
+        removeAllItem()
+        resolve()
+      })
+      // TODO :清理掉权限相关配置
+    }
   }
 })
